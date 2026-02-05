@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import axios from "axios";
+import api from "../services/api";
 import { useAuth } from "./AuthContext";
 
 const AnalyticsContext = createContext();
@@ -21,10 +21,7 @@ export const AnalyticsProvider = ({ children }) => {
 
         setLoading(true);
         try {
-            const token = localStorage.getItem("token");
-            const response = await axios.get("http://localhost:5000/api/dashboard/analytics", {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            const response = await api.get("/dashboard/analytics");
 
             // Map backend response to expected structure
             const mappedData = {
