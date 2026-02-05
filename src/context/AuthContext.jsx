@@ -51,8 +51,30 @@ export const AuthProvider = ({ children }) => {
             if (error.response) {
                 console.error("Error Response Data:", error.response.data);
                 console.error("Error Response Status:", error.response.status);
+
+                // Handle approval status errors
+                if (error.response.status === 403 && error.response.data.approvalStatus) {
+                    return {
+                        success: false,
+                        error: error.response.data.message,
+                        approvalStatus: error.response.data.approvalStatus
+                    };
+                }
             }
             return { success: false, error: error.response?.data?.message || 'Login failed' };
+        }
+    };
+
+    const signup = async (name, email, password) => {
+        try {
+            const response = await api.post('/auth/signup', { name, email, password });
+            return { success: true, message: response.data.message };
+        } catch (error) {
+            console.error("Signup error:", error);
+            return {
+                success: false,
+                error: error.response?.data?.message || 'Signup failed'
+            };
         }
     };
 
@@ -79,7 +101,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ user, login, logout, changePassword, loading }}>
+        <AuthContext.Provider value={{ user, login, signup, logout, changePassword, loading }}>
             {!loading && children}
         </AuthContext.Provider>
     );

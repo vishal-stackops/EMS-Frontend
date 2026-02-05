@@ -62,6 +62,7 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle }) => {
         { text: 'Leave', icon: <EventNoteIcon />, path: '/leaves', roles: ['EMPLOYEE'] },
         { text: 'Leave Management', icon: <EventAvailableIcon />, path: '/leave-management', roles: ['ADMIN', 'HR'] },
         { text: 'Register', icon: <PersonAddIcon />, path: '/register', roles: ['ADMIN'] },
+        { text: 'Pending Users', icon: <TravelExploreIcon />, path: '/pending-users', roles: ['ADMIN', 'HR'] },
 
         // Employee Only Links
         { text: 'My Profile', icon: <PersonAddIcon />, path: '/employee-profile', roles: ['EMPLOYEE'] },

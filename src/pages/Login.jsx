@@ -22,6 +22,9 @@ const Login = () => {
         const result = await login(email, password);
         if (result.success) {
             navigate('/');
+        } else if (result.approvalStatus === 'PENDING') {
+            // Redirect to pending approval page
+            navigate('/pending-approval');
         } else {
             setError(result.error);
         }

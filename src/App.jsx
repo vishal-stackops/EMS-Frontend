@@ -28,6 +28,9 @@ import LeaveRequest from './pages/LeaveRequest';
 import LeaveManagement from './pages/LeaveManagement';
 import Register from './pages/Register';
 import Login from './pages/Login';
+import PublicSignup from './pages/PublicSignup';
+import PendingApproval from './pages/PendingApproval';
+import PendingUsers from './pages/PendingUsers';
 import PrivateRoute from './components/PrivateRoute';
 import { AnalyticsProvider } from './context/AnalyticsContext';
 import Analytics from './pages/Analytics';
@@ -72,7 +75,8 @@ function App() {
                         <Router>
                           <Routes>
                             <Route path="/login" element={<Login />} />
-                            <Route path="/signup" element={<Register isPublic={true} />} />
+                            <Route path="/signup" element={<PublicSignup />} />
+                            <Route path="/pending-approval" element={<PendingApproval />} />
 
                             {/* Protected Routes */}
                             <Route path="/" element={
@@ -186,6 +190,13 @@ function App() {
                               <PrivateRoute allowedRoles={['ADMIN', 'HR']}>
                                 <Layout>
                                   <Analytics />
+                                </Layout>
+                              </PrivateRoute>
+                            } />
+                            <Route path="/pending-users" element={
+                              <PrivateRoute allowedRoles={['ADMIN', 'HR']}>
+                                <Layout>
+                                  <PendingUsers />
                                 </Layout>
                               </PrivateRoute>
                             } />
