@@ -27,7 +27,8 @@ const PublicSignup = () => {
         password: '',
         roleName: 'EMPLOYEE'
     });
-    const [status, setStatus] = useState({ type: '', message: '' });
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
     const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
@@ -37,22 +38,14 @@ const PublicSignup = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setStatus({ type: '', message: '' });
+        setError('');
+        setSuccess('');
         setLoading(true);
-
-        // Validate password confirmation
-        if (formData.password !== formData.confirmPassword) {
-            setStatus({ type: 'error', message: 'Passwords do not match' });
-            setLoading(false);
-            return;
-        }
 
         try {
             const result = await signup(formData.name, formData.email, formData.password);
 
             if (result.success) {
-                setStatus({ type: 'success', message: result.message });
-                setFormData({ name: '', email: '', password: '', confirmPassword: '' });
                 setSuccess(result.message || 'Registration successful! Redirecting to login...');
                 setFormData({
                     name: '',
