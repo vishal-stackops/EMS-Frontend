@@ -41,16 +41,23 @@ const PublicSignup = () => {
             if (result.success) {
                 setStatus({ type: 'success', message: result.message });
                 setFormData({ name: '', email: '', password: '', confirmPassword: '' });
+                setSuccess(result.message || 'Registration successful! Redirecting to login...');
+                setFormData({
+                    name: '',
+                    email: '',
+                    password: '',
+                    roleName: 'EMPLOYEE'
+                });
 
-                // Redirect to login after 3 seconds
+                // Redirect to login after 2 seconds
                 setTimeout(() => {
                     navigate('/login');
-                }, 3000);
+                }, 2000);
             } else {
-                setStatus({ type: 'error', message: result.error });
+                setError(result.error || 'Registration failed');
             }
-        } catch (error) {
-            setStatus({ type: 'error', message: 'An unexpected error occurred' });
+        } catch (err) {
+            setError('An unexpected error occurred');
         } finally {
             setLoading(false);
         }
@@ -63,104 +70,105 @@ const PublicSignup = () => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                bgcolor: 'background.default',
-                background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.secondary.main} 100%)`,
-                p: 2
+                bgcolor: 'primary.dark',
+                py: 4
             }}
         >
-            <Paper elevation={10} sx={{ p: 4, borderRadius: 2, width: '100%', maxWidth: 450 }}>
-                {/* Empify Logo */}
-                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 3 }}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1 }}>
-                        <Box
-                            sx={{
-                                width: 48,
-                                height: 48,
-                                bgcolor: theme.palette.primary.main,
-                                borderRadius: '14px',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                color: '#fff',
-                                boxShadow: '0 8px 16px -4px rgba(60, 70, 123, 0.4)'
-                            }}
-                        >
-                            <HexagonIcon sx={{ fontSize: 30 }} />
-                        </Box>
-                        <Typography
-                            variant="h4"
-                            fontWeight="800"
-                            sx={{
-                                background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.secondary.main} 100%)`,
-                                WebkitBackgroundClip: 'text',
-                                WebkitTextFillColor: 'transparent',
-                            }}
-                        >
-                            Empify
-                        </Typography>
-                    </Box>
-                    <Typography component="h1" variant="h6" color="text.secondary" fontWeight="500">
-                        Create your account
+            <Paper
+                elevation={3}
+                sx={{
+                    p: 4,
+                    maxWidth: 500,
+                    width: '100%',
+                    mx: 2
+                }}
+            >
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: 2, gap: 1 }}>
+                    <PersonAddIcon color="primary" fontSize="large" />
+                    <Typography variant="h5" component="h1" fontWeight="bold">
+                        Register New Employee
                     </Typography>
                 </Box>
 
-                {status.message && (
-                    <Alert severity={status.type} sx={{ mb: 2 }}>
-                        {status.message}
+                {error && (
+                    <Alert severity="error" sx={{ mb: 2 }}>
+                        {error}
+                    </Alert>
+                )}
+
+                {success && (
+                    <Alert severity="success" sx={{ mb: 2 }}>
+                        {success}
                     </Alert>
                 )}
 
                 <form onSubmit={handleSubmit}>
-                    <TextField
-                        fullWidth
-                        label="Full Name"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        required
-                        margin="normal"
-                    />
-                    <TextField
-                        fullWidth
-                        label="Email Address"
-                        name="email"
-                        type="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                        margin="normal"
-                    />
-                    <TextField
-                        fullWidth
-                        label="Password"
-                        name="password"
-                        type="password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        required
-                        margin="normal"
-                    />
-                    <TextField
-                        fullWidth
-                        label="Confirm Password"
-                        name="confirmPassword"
-                        type="password"
-                        value={formData.confirmPassword}
-                        onChange={handleChange}
-                        required
-                        margin="normal"
-                    />
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        color="primary"
-                        size="large"
-                        fullWidth
-                        disabled={loading}
-                        sx={{ mt: 3, py: 1.5, fontWeight: 'bold' }}
-                    >
-                        {loading ? 'Creating Account...' : 'Register'}
-                    </Button>
+                    <Grid container spacing={3} direction="row">
+                        <Grid item xs={12}>
+                            <TextField
+                                fullWidth
+                                label="Full Name"
+                                name="name"
+                                value={formData.name}
+                                onChange={handleChange}
+                                required
+                                margin="normal"
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                fullWidth
+                                label="Email Address"
+                                name="email"
+                                type="email"
+                                value={formData.email}
+                                onChange={handleChange}
+                                required
+                                margin="normal"
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                fullWidth
+                                label="Password"
+                                name="password"
+                                type="password"
+                                value={formData.password}
+                                onChange={handleChange}
+                                required
+                                margin="normal"
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <FormControl fullWidth margin="normal">
+                                <InputLabel id="role-label">Role</InputLabel>
+                                <Select
+                                    labelId="role-label"
+                                    id="role"
+                                    name="roleName"
+                                    value={formData.roleName}
+                                    label="Role"
+                                    onChange={handleChange}
+                                >
+                                    <MenuItem value="EMPLOYEE">EMPLOYEE</MenuItem>
+                                    <MenuItem value="HR">HR</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                color="primary"
+                                size="large"
+                                fullWidth
+                                disabled={loading}
+                                sx={{ mt: 2, py: 1.5, fontWeight: 'bold' }}
+                            >
+                                {loading ? 'Registering...' : 'Register Employee'}
+                            </Button>
+                        </Grid>
+                    </Grid>
                 </form>
 
                 <Box sx={{ mt: 3, textAlign: 'center' }}>
