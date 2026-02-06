@@ -19,14 +19,13 @@ import { useAuth } from '../context/AuthContext';
 
 const PublicSignup = () => {
     const { signup } = useAuth();
-    const theme = useTheme();
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         name: '',
         email: '',
         password: '',
-        confirmPassword: ''
+        roleName: 'EMPLOYEE'
     });
     const [status, setStatus] = useState({ type: '', message: '' });
     const [loading, setLoading] = useState(false);
