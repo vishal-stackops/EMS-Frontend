@@ -12,7 +12,8 @@ const PublicSignup = () => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
-        password: ''
+        password: '',
+        confirmPassword: ''
     });
     const [status, setStatus] = useState({ type: '', message: '' });
     const [loading, setLoading] = useState(false);
@@ -27,12 +28,19 @@ const PublicSignup = () => {
         setStatus({ type: '', message: '' });
         setLoading(true);
 
+        // Validate password confirmation
+        if (formData.password !== formData.confirmPassword) {
+            setStatus({ type: 'error', message: 'Passwords do not match' });
+            setLoading(false);
+            return;
+        }
+
         try {
             const result = await signup(formData.name, formData.email, formData.password);
 
             if (result.success) {
                 setStatus({ type: 'success', message: result.message });
-                setFormData({ name: '', email: '', password: '' });
+                setFormData({ name: '', email: '', password: '', confirmPassword: '' });
 
                 // Redirect to login after 3 seconds
                 setTimeout(() => {
@@ -128,6 +136,16 @@ const PublicSignup = () => {
                         name="password"
                         type="password"
                         value={formData.password}
+                        onChange={handleChange}
+                        required
+                        margin="normal"
+                    />
+                    <TextField
+                        fullWidth
+                        label="Confirm Password"
+                        name="confirmPassword"
+                        type="password"
+                        value={formData.confirmPassword}
                         onChange={handleChange}
                         required
                         margin="normal"
