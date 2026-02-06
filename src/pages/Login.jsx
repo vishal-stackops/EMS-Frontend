@@ -115,11 +115,11 @@ const Login = () => {
                         variant="contained"
                         sx={{ mt: 3, mb: 2, bgcolor: 'primary.main', height: 48, fontSize: '1rem' }}
                     >
-                        Sign In
+                        Login
                     </Button>
                     <Box sx={{ textAlign: 'center' }}>
                         <Link component={RouterLink} to="/signup" variant="body2" sx={{ textDecoration: 'none', fontWeight: 'bold' }}>
-                            Don't have an account? Sign Up
+                            Don't have an account? Register
                         </Link>
                     </Box>
                 </form>
