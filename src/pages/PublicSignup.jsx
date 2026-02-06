@@ -159,7 +159,7 @@ const PublicSignup = () => {
                         disabled={loading}
                         sx={{ mt: 3, py: 1.5, fontWeight: 'bold' }}
                     >
-                        {loading ? 'Creating Account...' : 'Sign Up'}
+                        {loading ? 'Creating Account...' : 'Register'}
                     </Button>
                 </form>
 
@@ -168,7 +168,7 @@ const PublicSignup = () => {
                         Already have an account?{' '}
                     </Typography>
                     <Link component={RouterLink} to="/login" variant="body2" sx={{ textDecoration: 'none', fontWeight: 'bold' }}>
-                        Sign In
+                        Login
                     </Link>
                 </Box>
             </Paper>
