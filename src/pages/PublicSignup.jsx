@@ -1,6 +1,19 @@
 import React, { useState } from 'react';
-import { Box, Paper, Typography, TextField, Button, Alert, Link, useTheme } from '@mui/material';
-import HexagonIcon from '@mui/icons-material/Hexagon';
+import {
+    Box,
+    Paper,
+    Typography,
+    TextField,
+    Button,
+    Alert,
+    Link,
+    Grid,
+    MenuItem,
+    Select,
+    FormControl,
+    InputLabel
+} from '@mui/material';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
